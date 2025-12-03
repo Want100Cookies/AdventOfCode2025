@@ -1,4 +1,4 @@
 ﻿
-using AdventOfCode2025.Day2;
+using AdventOfCode2025.Day3;
 
 Puzzle.Execute();
