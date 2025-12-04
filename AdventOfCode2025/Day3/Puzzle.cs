@@ -21,7 +21,7 @@ public static class Puzzle
 
 		ulong sum1 = 0;
 		ulong sum2 = 0;
-		
+
 		foreach (string line in input)
 		{
 			ProcessLinePart1(line, ref sum1);
@@ -117,7 +117,7 @@ public static class Puzzle
 		{
 			result += maxInts[i1] * Math.Pow(10, maxInts.Length - i1 - 1);
 		}
-		
+
 		//Console.WriteLine($"Input: {line} result: {result}");
 
 		sum += (ulong) result;
