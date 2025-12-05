@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.Text;
-
-namespace AdventOfCode2025.Day4;
+﻿namespace AdventOfCode2025.Day4;
 
 public static class Puzzle
 {
