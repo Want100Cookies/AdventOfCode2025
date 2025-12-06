@@ -1,12 +1,14 @@
 ﻿using System.Diagnostics;
+using AdventOfCode2025.Utility;
 
 namespace AdventOfCode2025.Day3;
 
-public static class Puzzle
+public class Puzzle : IPuzzleSolver
 {
-	public static void Execute()
+	public DateOnly Date => new DateOnly(2025, 12, 3);
+
+	public (string PartOne, string PartTwo) Solve(string[] input, bool debug)
 	{
-		string[] input = File.ReadAllLines("Day3/Input.txt");
 		//string[] input =
 		//[
 		//	"987654321111111",
@@ -24,8 +26,7 @@ public static class Puzzle
 			ProcessLinePart2(line, ref sum2);
 		}
 
-		Console.WriteLine($"Sum (part 1): {sum1}");
-		Console.WriteLine($"Sum (part 2): {sum2}");
+		return (sum1.ToString(), sum2.ToString());
 	}
 
 	private static void ProcessLinePart1(ReadOnlySpan<char> line, ref ulong sum)

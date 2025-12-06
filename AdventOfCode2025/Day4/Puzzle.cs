@@ -1,10 +1,13 @@
-﻿namespace AdventOfCode2025.Day4;
+﻿using AdventOfCode2025.Utility;
 
-public static class Puzzle
+namespace AdventOfCode2025.Day4;
+
+public class Puzzle : IPuzzleSolver
 {
-	public static void Execute()
+	public DateOnly Date => new DateOnly(2025, 12, 4);
+	public (string PartOne, string PartTwo) Solve(string[] input, bool debug)
 	{
-		char[][] input = File.ReadAllLines("Day4/Input.txt")
+		char[][] inputChars = input
 			.Select(s => s.ToCharArray())
 			.ToArray();
 
@@ -22,7 +25,8 @@ public static class Puzzle
 		//	"@.@.@@@.@.",
 		//];
 
-		int rowLength = input[0].Length;
+		int? partOne = null;
+		int rowLength = inputChars[0].Length;
 		int rolls = 0;
 		int currentBatch = 0;
 
@@ -30,11 +34,11 @@ public static class Puzzle
 		{
 			currentBatch = 0;
 
-			for (int y = 0; y < input.Length; y++)
+			for (int y = 0; y < inputChars.Length; y++)
 			{
 				for (int x = 0; x < rowLength; x++)
 				{
-					char current = input[y][x];
+					char current = inputChars[y][x];
 
 					if (current == '@')
 					{
@@ -47,7 +51,7 @@ public static class Puzzle
 							if (i > 0) i -= 1;
 							for (; i < rowLength && i <= x + 1; i++)
 							{
-								if (input[y - 1][i] == '@')
+								if (inputChars[y - 1][i] == '@')
 								{
 									found++;
 								}
@@ -55,13 +59,13 @@ public static class Puzzle
 						}
 
 						//check three below
-						if (y < input.Length - 1)
+						if (y < inputChars.Length - 1)
 						{
 							int i = x;
 							if (i > 0) i -= 1;
 							for (; i < rowLength && i <= x + 1; i++)
 							{
-								if (input[y + 1][i] == '@')
+								if (inputChars[y + 1][i] == '@')
 								{
 									found++;
 								}
@@ -69,13 +73,13 @@ public static class Puzzle
 						}
 
 						//check left
-						if (x > 0 && input[y][x - 1] == '@')
+						if (x > 0 && inputChars[y][x - 1] == '@')
 						{
 							found++;
 						}
 
 						//check left
-						if (x < rowLength - 1 && input[y][x + 1] == '@')
+						if (x < rowLength - 1 && inputChars[y][x + 1] == '@')
 						{
 							found++;
 						}
@@ -83,23 +87,28 @@ public static class Puzzle
 						if (found <= 3)
 						{
 							current = 'x';
-							input[y][x] = '.';
+							inputChars[y][x] = '.';
 							rolls++;
 							currentBatch++;
 						}
 					}
 
-					//Console.Write(current);
+					if (debug) Console.Write(current);
 				}
 
-				//Console.WriteLine();
+				if (debug) Console.WriteLine();
 			}
 
-			//Console.Clear();
-			Console.WriteLine($"{rolls} - {currentBatch}");
+			if (debug) Console.Clear();
+			partOne ??= currentBatch;
+			if (debug) Console.WriteLine($"{rolls} - {currentBatch}");
 
 		} while (currentBatch > 0);
 
-		Console.WriteLine($"Rolls found: {rolls}");
+		if (debug) Console.WriteLine($"Rolls found: {rolls}");
+		return (
+			"not sure how I figured this one out, but part two broke it :)",
+			rolls.ToString()
+		);
 	}
 }

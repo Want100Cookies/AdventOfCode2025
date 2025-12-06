@@ -1,25 +1,28 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
+using AdventOfCode2025.Utility;
 
 namespace AdventOfCode2025.Day2;
 
-public static class Puzzle
+public class Puzzle : IPuzzleSolver
 {
-	public static void Execute()
+	public DateOnly Date => new DateOnly(2025, 12, 2);
+
+	public (string PartOne, string PartTwo) Solve(string[] input, bool debug)
 	{
-		ReadOnlySpan<char> input = File.ReadAllText("Day2/Input.txt").AsSpan();
+		ReadOnlySpan<char> line = input[0].AsSpan();
 
 		ulong sum = 0;
 		ulong sum2 = 0;
 
-		foreach (Range range in input.Split(','))
+		foreach (Range range in line.Split(','))
 		{
-			int indexOfMinus = range.Start.Value + input[range].IndexOf('-');
+			int indexOfMinus = range.Start.Value + line[range].IndexOf('-');
 
 			if (indexOfMinus == -1) throw new UnreachableException("Input malformed");
 
-			ReadOnlySpan<char> startString = input[range.Start..indexOfMinus];
-			ReadOnlySpan<char> endString = input[(indexOfMinus + 1)..range.End];
+			ReadOnlySpan<char> startString = line[range.Start..indexOfMinus];
+			ReadOnlySpan<char> endString = line[(indexOfMinus + 1)..range.End];
 
 			ulong start = ulong.Parse(startString, NumberStyles.None, CultureInfo.InvariantCulture);
 			ulong end = ulong.Parse(endString, NumberStyles.None, CultureInfo.InvariantCulture);
@@ -34,8 +37,10 @@ public static class Puzzle
 			}
 		}
 
-		Console.WriteLine($"Sum (part 1): {sum}");
-		Console.WriteLine($"Sum (part 2): {sum2}");
+		return (
+			sum.ToString(),
+			sum2.ToString()
+		);
 	}
 
 	private static void PartOne(ReadOnlySpan<char> valueString, ulong value, ref ulong sum)
@@ -43,7 +48,7 @@ public static class Puzzle
 		if (valueString.Length % 2 != 0) return;
 
 		int half = valueString.Length / 2;
-		
+
 		if (valueString[..half].SequenceEqual(valueString[half..]))
 		{
 			sum += value;
@@ -63,10 +68,10 @@ public static class Puzzle
 			ReadOnlySpan<char> part = valueString[..i];
 
 			bool anySubpatternMismatch = false;
-			
+
 			for (int j = i; j <= valueString.Length - i; j += i)
 			{
-				ReadOnlySpan<char> otherPart = valueString[j..(j+i)];
+				ReadOnlySpan<char> otherPart = valueString[j..(j + i)];
 
 				if (!part.SequenceEqual(otherPart))
 				{

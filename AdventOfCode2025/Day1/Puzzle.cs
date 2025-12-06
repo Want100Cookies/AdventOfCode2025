@@ -1,18 +1,20 @@
-﻿namespace AdventOfCode2025.Day1;
+﻿using AdventOfCode2025.Utility;
 
-public static class Puzzle
+namespace AdventOfCode2025.Day1;
+
+public class Puzzle : IPuzzleSolver
 {
-	public static void Execute()
-	{
-		string[] rotationStrings = File.ReadAllLines("Day1/Input.txt");
+	public DateOnly Date => new DateOnly(2025, 12, 1);
 
+	public (string PartOne, string PartTwo) Solve(string[] input, bool debug)
+	{
 		int currentPoint = 50;
 		int howManyAtZeroPartOne = 0;
 		int howManyAtZeroPartTwo = 0;
 
-		//Console.WriteLine($"Start: {currentPoint}");
+		if (debug) Console.WriteLine($"Start: {currentPoint}");
 
-		foreach (string rotationString in rotationStrings)
+		foreach (string rotationString in input)
 		{
 			bool isLeft = rotationString[0] == 'L';
 			int rotations = int.Parse(rotationString[1..^0]);
@@ -33,12 +35,14 @@ public static class Puzzle
 
 			if (currentPoint == 0) howManyAtZeroPartOne++;
 
-			//Console.WriteLine($"{rotationString} -> {currentPoint}");
+			if (debug) Console.WriteLine($"{rotationString} -> {currentPoint}");
 		}
 
-		//Console.WriteLine($"End: {currentPoint}");
-		Console.WriteLine($"How many at zero (1): {howManyAtZeroPartOne}");
-		Console.WriteLine($"How many at zero (2): {howManyAtZeroPartTwo}");
-	}
+		if (debug) Console.WriteLine($"End: {currentPoint}");
 
+		return (
+			howManyAtZeroPartOne.ToString(),
+			howManyAtZeroPartTwo.ToString()
+		);
+	}
 }

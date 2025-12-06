@@ -1,13 +1,14 @@
 ﻿using System.Globalization;
+using AdventOfCode2025.Utility;
 
 namespace AdventOfCode2025.Day5;
 
-public static class Puzzle
+public class Puzzle : IPuzzleSolver
 {
-	public static void Execute()
-	{
-		string[] input = File.ReadAllLines("Day5/Input.txt");
+	public DateOnly Date => new DateOnly(2025, 12, 5);
 
+	public (string PartOne, string PartTwo) Solve(string[] input, bool debug)
+	{
 		//string[] input =
 		//[
 		//	"3-5",
@@ -44,19 +45,18 @@ public static class Puzzle
 
 				if (freshFood.Any(f => foodIndex >= f.Item1 && foodIndex <= f.Item2))
 				{
-					Console.WriteLine($"Fresh: {foodIndex}");
+					if (debug) Console.WriteLine($"Fresh: {foodIndex}");
 					sumOfFreshFood++;
 				}
 				else
 				{
-					Console.WriteLine($"Stale: {foodIndex}");
+					if (debug) Console.WriteLine($"Stale: {foodIndex}");
 				}
 			}
 		}
 
-		Console.WriteLine($"Sum of fresh food (part 1): {sumOfFreshFood}");
-
-
+		if (debug) Console.WriteLine($"Sum of fresh food (part 1): {sumOfFreshFood}");
+		
 		//second pass for part 2
 		
 		//sort ranges by start
@@ -90,6 +90,10 @@ public static class Puzzle
 		//calculate total number of fresh ingredient IDs
 		ulong numberOfIngredientIdsFresh = merged.Aggregate(0UL, (acc, r) => acc + (r.Item2 - r.Item1 + 1));
 
-		Console.WriteLine($"Number of ingredient IDs that are fresh (part 2): {numberOfIngredientIdsFresh}");
+		if (debug) Console.WriteLine($"Number of ingredient IDs that are fresh (part 2): {numberOfIngredientIdsFresh}");
+
+		return (
+			sumOfFreshFood.ToString(CultureInfo.InvariantCulture),
+			numberOfIngredientIdsFresh.ToString(CultureInfo.InvariantCulture));
 	}
 }
