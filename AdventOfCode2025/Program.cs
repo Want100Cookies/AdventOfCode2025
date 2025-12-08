@@ -6,7 +6,7 @@ List<IPuzzleSolver> solutions = Assembly.GetExecutingAssembly()
 	.GetTypes()
 	.Where(t => t.IsAssignableTo(typeof(IPuzzleSolver)) && !t.IsAbstract)
 	.Select(t => (IPuzzleSolver) Activator.CreateInstance(t)!)
-	.OrderBy(t => t.Date)
+	.OrderByDescending(t => t.Date)
 	.ToList();
 
 IPuzzleSolver solution;
