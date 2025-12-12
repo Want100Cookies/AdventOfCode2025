@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using AdventOfCode2025.Utility;
-using Google.OrTools.LinearSolver;
+﻿using AdventOfCode2025.Utility;
 
 namespace AdventOfCode2025.Day11;
 

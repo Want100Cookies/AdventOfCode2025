@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AdventOfCode2025.Utility;
+﻿namespace AdventOfCode2025.Utility;
 
 public interface IPuzzleSolver
 {

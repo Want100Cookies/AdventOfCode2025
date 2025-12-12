@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AdventOfCode2025.Utility;
+﻿using AdventOfCode2025.Utility;
 
 namespace AdventOfCode2025.Day7;
 
