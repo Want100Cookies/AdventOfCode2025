@@ -126,22 +126,6 @@ public class Puzzle : IPuzzleSolver
 		return totalPresses;
 	}
 
-	//for each wire, estimate the minimum presses needed using the best schematic for that wire
-	private static int ImprovedHeuristic(JoltageState state, int[] requirements, List<int[]> schematics)
-	{
-		int maxPresses = 0;
-		for (int i = 0; i < requirements.Length; i++)
-		{
-			int needed = requirements[i] - state.Joltage[i];
-			if (needed <= 0) continue;
-			int maxIncrement = schematics.Select(schematic => schematic.Count(w => w == i)).Prepend(0).Max();
-			if (maxIncrement == 0) return int.MaxValue; // Unreachable
-			int presses = (needed + maxIncrement - 1) / maxIncrement;
-			if (presses > maxPresses) maxPresses = presses;
-		}
-		return maxPresses;
-	}
-
 	//source: https://rosettacode.org/wiki/Power_set#C#:~:text=An%20alternative%20implementation%20for%20an%u2026
 	private record Machine
 	{
